@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Fuzzy Logic</title>
+</head>
+<script src="./presentation.js"></script>
+<body onLoad="presentation();">
+Input Variables:
+<center>
+<img src="img.jpg">
+</center>
+<hr>
+Output Variable:
+<center>
+<img src="img1.jpg">
+</center>
+<hr>
+Inferences:
+<div id="inferences"></div>
+<hr>
+Input:
+<div id="input"></div>
+<hr>
+<input type="button" value="Calculate" onClick="document.getElementById('result').innerHTML='Result: '+fl.getResult(obj);">
+<span id="result"></span>
+<script src="../src/fuzzy.js"></script>
+<script>
+	var obj = {
+		crisp_input: [-1, -2.5],
+		variables_input: [
+			{
+				name: "Error",
+				setsName: ["Too Hot", "Just Right", "Too Cold"],
+				sets: [
+					[-4,-4,-2,0],
+					[-2,0,0,2],
+					[0,2,4,4]
+				]
+			},
+			{
+				name: "Error_Dot",
+				setsName: ["Getting Hotter", "No Change", "Getting Colder"],
+				sets: [
+					[-10,-10,-5,0],
+					[-5,0,0,5],
+					[0,5,10,10]
+				]
+			}
+		],
+		variable_output: {
+			name: "Action",
+			setsName: ["Cool", "Do Nothing", "Heat"],
+			sets: [
+				[-100,-100,-50,0],
+				[-50,0,0,50],
+				[0,50,100,100]
+			]
+		},
+		inferences: [
+			{
+				one: {variable: 0, set: 0},
+				func: "and",
+				two: {variable: 1, set: 1},
+				then: 0
+			},
+			{
+				one: {variable: 0, set: 1},
+				func: "and",
+				two: {variable: 1, set: 1},
+				then: 1
+			},
+			{
+				one: {variable: 0, set: 0},
+				func: "and",
+				two: {variable: 1, set: 0},
+				then: 0
+			},
+			{
+				one: {variable: 0, set: 1},
+				func: "and",
+				two: {variable: 1, set: 0},
+				then: 0
+			},
+			{
+				one: {variable: 0, set: 2},
+				func: "and",
+				two: {variable: 1, set: 1},
+				then: 2
+			}
+		]
+	};
+	var fl = new FL();
+</script>
+</body>
+</html>
