@@ -5,92 +5,62 @@
 	<title>Fuzzy Logic</title>
 </head>
 <script src="./presentation.js"></script>
+<script src="./raphael-min.js"></script>
 <body onLoad="presentation();">
-Input Variables:
-<center>
-<img src="img.jpg">
-</center>
+<h1>Input Variables:</h1>
+<div id="variables_input"></div>
 <hr>
-Output Variable:
-<center>
-<img src="img1.jpg">
-</center>
+<h1>Output Variables:</h1>
+<div id="variable_output"></div>
 <hr>
-Inferences:
+<h1>Inferences:</h1>
 <div id="inferences"></div>
 <hr>
-Input:
+<h1>Input:</h1>
 <div id="input"></div>
 <hr>
 <input type="button" value="Calculate" onClick="document.getElementById('result').innerHTML='Result: '+fl.getResult(obj);">
 <span id="result"></span>
+<div id="draw_result"></div>
 <script src="../src/fuzzy.js"></script>
 <script>
 	var obj = {
-		crisp_input: [-1, -2.5],
+		crisp_input: [200, 8],
 		variables_input: [
 			{
-				name: "Error",
-				setsName: ["Too Hot", "Just Right", "Too Cold"],
+				name: "Distance to Target",
+				setsName: ["Close", "Medium", "Far"],
 				sets: [
-					[-4,-4,-2,0],
-					[-2,0,0,2],
-					[0,2,4,4]
+					[0,0,25,150],
+					[25,150,150,300],
+					[150,300,400,400]
 				]
 			},
 			{
-				name: "Error_Dot",
-				setsName: ["Getting Hotter", "No Change", "Getting Colder"],
+				name: "Ammo Status",
+				setsName: ["Low", "Okay", "Loads"],
 				sets: [
-					[-10,-10,-5,0],
-					[-5,0,0,5],
-					[0,5,10,10]
+					[0,0,0,10],
+					[0,10,10,30],
+					[10,30,40,40]
 				]
 			}
 		],
 		variable_output: {
-			name: "Action",
-			setsName: ["Cool", "Do Nothing", "Heat"],
+			name: "Desirability",
+			setsName: ["Undesirable", "Desirable", "Very Desirable"],
 			sets: [
-				[-100,-100,-50,0],
-				[-50,0,0,50],
-				[0,50,100,100]
+				[0,0,25,50],
+				[25,50,50,75],
+				[50,75,100,100]
 			]
 		},
 		inferences: [
-			{
-				one: {variable: 0, set: 0},
-				func: "and",
-				two: {variable: 1, set: 1},
-				then: 0
-			},
-			{
-				one: {variable: 0, set: 1},
-				func: "and",
-				two: {variable: 1, set: 1},
-				then: 1
-			},
-			{
-				one: {variable: 0, set: 0},
-				func: "and",
-				two: {variable: 1, set: 0},
-				then: 0
-			},
-			{
-				one: {variable: 0, set: 1},
-				func: "and",
-				two: {variable: 1, set: 0},
-				then: 0
-			},
-			{
-				one: {variable: 0, set: 2},
-				func: "and",
-				two: {variable: 1, set: 1},
-				then: 2
-			}
+			[0,2,0],
+			[0,1,2]
 		]
 	};
-	var fl = new FL();
+	var fl = new FuzzyLogic();
 </script>
 </body>
 </html>
