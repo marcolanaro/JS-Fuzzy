@@ -25,7 +25,7 @@
 <script src="../src/fuzzy-min.js"></script>
 <script>
 	var obj = {
-		crisp_input: [200, 8],
+		crisp_input: [150, 10, 10],
 		variables_input: [
 			{
 				name: "Distance to Target",
@@ -44,6 +44,15 @@
 					[0,10,10,30],
 					[10,30,40,40]
 				]
+			},
+			{
+				name: "Defense",
+				setsName: ["Light", "Medium", "Heavy"],
+				sets: [
+					[0,0,0,10],
+					[0,10,10,30],
+					[10,30,40,40]
+				]
 			}
 		],
 		variable_output: {
@@ -57,7 +66,8 @@
 		},
 		inferences: [
 			[0,2,0],
-			[0,1,2]
+			[0,1,2],
+			[2,1,0]
 		]
 	};
 	var fl = new FuzzyLogic();
