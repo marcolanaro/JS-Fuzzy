@@ -10,7 +10,7 @@ var FuzzyLogic = (function() {
             var variables = this.construct(options.variables_input),
                 fuzzy_input = this.fuzzification(options.crisp_input, variables),
                 output_combination = this.output_combination(fuzzy_input, options.inferences, options.variable_output),
-                fuzzy_output = this.takeMaxofArraySet(output_combination),
+                fuzzy_output = this.takeMaxOfArraySet(output_combination),
                 crisp_output = this.defuzzification(fuzzy_output, this.construct_variable(options.variable_output.sets));
 
             return crisp_output;
@@ -28,11 +28,11 @@ var FuzzyLogic = (function() {
         },
 
         construct_variable: function(f) {
-            var ob = [],
+            var obv = [],
                 i;
 
             for (i = f.length - 1; i >= 0; i -= 1) {
-                ob[i] = {
+                obv[i] = {
                     a: f[i],
                     firstPoint: (f[i][0] === f[i][1]) ? 1 : 0,
                     lastPoint: (f[i][2] === f[i][3]) ? 1 : 0,
@@ -40,7 +40,7 @@ var FuzzyLogic = (function() {
                     mDown: (1 / (f[i][3] - f[i][2]))
                 };
             }
-            return ob;
+            return obv;
         },
 
         fuzzification: function(input, variables) {
@@ -168,37 +168,31 @@ var FuzzyLogic = (function() {
                 den += area;
             }
 
-            return den === 0 ? 0 : num / den;
+            return (den === 0 ? 0 : (num / den));
         },
 
-        takeMaxofArraySet: function(set) {
+        takeMaxOfArraySet: function(set) {
             var output = [],
                 i;
 
             for (i = set.length - 1; i >= 0; i -= 1) {
-                output[i] = this.takeMaxofArray(set[i]);
+                output[i] = this.takeMaxOfArray(set[i]);
             }
 
             return output;
         },
 
-        takeMaxofArray: function(arr) {
-            var result,
-                max,
+        takeMaxOfArray: function(arr) {
+            var max = arr[0],
                 j;
 
-            if (arr.length === 1) {
-                result = arr[0];
-            } else {
-                for (j = arr.length - 2; j >= 0; j -= 1) {
-                    max = Math.max(arr[j], arr[j + 1]);
-                }
-
-                result = max;
+            for (j = 1; j < arr.length; j += 1) {
+                max = arr[j] > max ? arr[j] : max;
             }
 
-            return result;
+            return max;
         }
+
     };
 
     return C;
